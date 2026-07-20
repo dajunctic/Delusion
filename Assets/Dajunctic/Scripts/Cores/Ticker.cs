@@ -1,3 +1,5 @@
+using System;
+
 namespace Dajunctic
 {
     public class Ticker

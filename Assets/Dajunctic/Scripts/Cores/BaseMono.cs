@@ -29,7 +29,10 @@ namespace Dajunctic.Cores
 
         void SubTick()
         {
-            
+            if (tickMode.HasFlag(TickMode.EarlyTick)) EarlyTick();
+            if (tickMode.HasFlag(TickMode.Tick)) Tick();
+            if (tickMode.HasFlag(TickMode.LateTick)) LateTick();
+            if (tickMode.HasFlag(TickMode.FixedTick)) FixedTick();
         }
 
         public virtual void Initialize() {}
