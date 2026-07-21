@@ -2,9 +2,12 @@ using System;
 
 namespace Dajunctic
 {
-    public class Ticker
+    public interface ICanTick
     {
-        
+        public void EarlyTick() {}
+        public void Tick() {}
+        public void LateTick() {}
+        public void FixedTick() {}
     }
 
     [Flags]
