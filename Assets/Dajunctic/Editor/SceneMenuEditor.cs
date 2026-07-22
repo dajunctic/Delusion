@@ -17,7 +17,7 @@ namespace Dajunctic
         static void ChangeScene(string name)
         {
             EditorSceneManager.SaveOpenScenes();
-            EditorSceneManager.OpenScene(Application.dataPath + "Delusion/Scenes/" + name + ".unity");
+            EditorSceneManager.OpenScene(Application.dataPath + "/Delusion/Scenes/" + name + ".unity");
         }
 
         static bool CanChangeScene(string name)
@@ -27,7 +27,7 @@ namespace Dajunctic
 
         static bool HasScene(string name)
         {
-            return File.Exists(Application.dataPath + "Delusion/Scenes/" + name + ".unity");
+            return File.Exists(Application.dataPath + "/Delusion/Scenes/" + name + ".unity");
         }
 
         [MenuItem("Scenes/Prefab Scene", false, 11)]

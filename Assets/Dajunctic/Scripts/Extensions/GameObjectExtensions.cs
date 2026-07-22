@@ -8,7 +8,7 @@ namespace Dajunctic
         public static T GetAndCacheComponent<T>(this GameObject go, ref T cache) where T : Component
         {
             if (cache == null)
-                cache = go.GetComponent<T>();
+                cache = go.GetComponentInChildren<T>();
             return cache;
         }
 
