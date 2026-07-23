@@ -85,6 +85,7 @@ MonoBehaviour:
   jumpInput: {fileID: -1916377846673030204, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   lookInput: {fileID: -3787169064211337688, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   sprintInput: {fileID: -8750674506638915993, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
+  cam: {fileID: 0}
 --- !u!143 &7721521748418183559
 CharacterController:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ namespace Dajunctic
             var moveInput = context.GetMoveInput();
             var sprintInput = context.GetSprintInput();
 
-            if (moveInput != Vector2.zero)
+            if (moveInput.sqrMagnitude >= 0.01f && context.IsGround())
             {
                 if (sprintInput)
                 {
@@ -30,8 +30,8 @@ namespace Dajunctic
                 }
             }
 
-             
-        }
+            context.HandleMove(0);
+        }   
 
     }
 }

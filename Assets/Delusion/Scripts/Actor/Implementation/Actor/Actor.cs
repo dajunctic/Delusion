@@ -10,6 +10,9 @@ namespace Dajunctic
 
         public virtual float WalkSpeed => 2.0f;
         public virtual float RunSpeed => 5.335f;
+        public virtual float RotateSpeed => 5f;
+        public virtual float Gravity => -9.81f;
+        public virtual float JumpForce => 1.5f;
 
 
         public virtual Vector3 Position => CachedTransform.position;

@@ -17,7 +17,7 @@ namespace Dajunctic
             var moveInput = context.GetMoveInput();
             var sprintInput = context.GetSprintInput();
 
-            if (moveInput == Vector2.zero)
+            if (moveInput.sqrMagnitude < 0.01f)
             {
                 stateMachine.ChangeState<PlayerIdleState>();
                 return;
@@ -29,12 +29,7 @@ namespace Dajunctic
                 return;
             } 
 
-            var moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-            var moveSpeed = context.RunSpeed * Time.deltaTime;
-
-            context.CharacterController.Move(moveSpeed * moveDirection);
-
-            context.Rotate(moveDirection, 0.3f);
+            context.HandleMove(context.RunSpeed);
         }
     }
 }

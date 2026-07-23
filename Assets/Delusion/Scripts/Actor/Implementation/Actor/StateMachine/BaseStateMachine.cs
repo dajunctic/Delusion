@@ -24,8 +24,8 @@ namespace Dajunctic
             CurrentState.Enter();
         }
 
-        public void Tick() => CurrentState?.Tick();
+        public virtual void Tick() => CurrentState?.Tick();
 
-        public void FixedTick() => CurrentState?.FixedTick();
+        public virtual void FixedTick() => CurrentState?.FixedTick();
     }
 }

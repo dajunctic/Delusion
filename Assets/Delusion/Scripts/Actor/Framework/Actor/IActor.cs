@@ -7,5 +7,8 @@ namespace Dajunctic
         public CharacterController CharacterController {get; }
         public float WalkSpeed {get; }
         public float RunSpeed {get; }
+        public float RotateSpeed {get; }
+        public float Gravity {get; }
+        public float JumpForce {get; }
     }
 }
