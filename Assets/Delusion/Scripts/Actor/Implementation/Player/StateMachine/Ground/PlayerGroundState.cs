@@ -9,12 +9,12 @@ namespace Dajunctic
         {
             base.Enter();
             context.PlayAnimation(AnimHash.Grounded);
+            context.StopAnimation(AnimHash.Airborne);
         }
 
         public override void Exit()
         {
             base.Exit();
-            context.StopAnimation(AnimHash.Grounded);
         }
 
 

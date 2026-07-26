@@ -19,6 +19,8 @@ namespace Dajunctic
             dashDirection =  moveInput.sqrMagnitude >= 0.01f ? context.GetMoveDirection() : context.CachedTransform.forward;
 
             context.PlayAnimation(AnimHash.Dash);
+            context.Animator.Play("Dash", -1, 0f);
+            context.Animator.Update(0f);
         }
 
         public override void Exit()

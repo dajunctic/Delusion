@@ -10,6 +10,8 @@ namespace Dajunctic
             context.AddForceVerticalVelocity(adjustedJumpForce);
 
             context.PlayAnimation(AnimHash.Jump);
+            context.Animator.Play("Jump", -1, 0f);
+            context.Animator.Update(0f);
 
             context.ResetCoyoteTime();
             context.ResetJumpBuffer();
@@ -34,7 +36,7 @@ namespace Dajunctic
                 return;
             }
 
-            context.HandleMove(GetSpeed(), context.GetMoveDirection());
+            context.HandleMove(GetSpeed(), context.GetMoveDirection(), false);
         }
     }
 }

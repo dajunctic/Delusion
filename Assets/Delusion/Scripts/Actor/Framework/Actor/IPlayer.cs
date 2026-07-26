@@ -21,7 +21,7 @@ namespace Dajunctic
         public void HandleDeceleration(float deceleration);
 
         public Vector3 GetMoveDirection();
-        public void HandleMove(float speed, Vector3 direction);
+        public void HandleMove(float speed, Vector3 direction, bool allowRotation = true);
         public bool CanDash();
         public void StartDash();
 

@@ -189,7 +189,7 @@ namespace Dajunctic
         }
 
 
-        public void HandleMove(float speed, Vector3 moveDirection)
+        public void HandleMove(float speed, Vector3 moveDirection, bool allowRotation = true)
         {
             if (IsGround() && verticalVelocity <= 0)
             {
@@ -217,7 +217,10 @@ namespace Dajunctic
                 Rigidbody.linearVelocity = targetVelocity;
             }
 
-            RotateToDirection(moveDirection);
+            if (allowRotation)
+            {
+                RotateToDirection(moveDirection);
+            }
         }
 
         public void HandleDeceleration(float deceleration)

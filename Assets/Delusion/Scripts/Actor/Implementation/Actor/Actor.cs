@@ -16,7 +16,7 @@ namespace Dajunctic
         public virtual float DashSpeed => 12f;
         public virtual float DashDuration => 0.35f;
         public virtual float DashCooldown => 2f;
-        public virtual float StoppingDeceleration => 15f;
+        public virtual float StoppingDeceleration => 20f;
         public virtual float Gravity => -9.81f;
         public virtual float JumpForce => 6.5f;
 

@@ -18,6 +18,12 @@ namespace Dajunctic
 
             if (context.IsGround())
             {
+                if (context.GetJumpInput() || context.IsJumpBufferValid())
+                {
+                    stateMachine.ChangeState<PlayerJumpState>();
+                    return;
+                }
+
                 if (context.IsHardLanding() && moveInput.sqrMagnitude >= 0.01f)
                 {
                     stateMachine.ChangeState<PlayerRollingState>();
@@ -29,7 +35,7 @@ namespace Dajunctic
                 return;
             }
 
-            context.HandleMove(GetSpeed(), context.GetMoveDirection());
+            context.HandleMove(GetSpeed(), context.GetMoveDirection(), false);
         }
     }
 }
