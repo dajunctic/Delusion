@@ -25,7 +25,14 @@ namespace Dajunctic
 
             if (moveInput.sqrMagnitude < 0.01f)
             {
-                stateMachine.ChangeState<PlayerHardStoppingState>();
+                if (movingTimer >= 0.25f)
+                {
+                    stateMachine.ChangeState<PlayerHardStoppingState>();
+                }
+                else
+                {
+                    stateMachine.ChangeState<PlayerIdleState>();
+                }
                 return;
             }
 
@@ -35,6 +42,7 @@ namespace Dajunctic
                 return;
             } 
 
+            context.UpdateLocomotionAnimation(1.0f);
             context.HandleMove(GetSpeed(), context.GetMoveDirection());
         }
     }

@@ -151,6 +151,14 @@ namespace Dajunctic
             return mult <= 0f ? 1f : mult;
         }
 
+        private float currentAnimSpeed;
+
+        public void UpdateLocomotionAnimation(float targetSpeedNormalized)
+        {
+            currentAnimSpeed = Mathf.MoveTowards(currentAnimSpeed, targetSpeedNormalized, Time.deltaTime * 6f);
+            Animator.SetFloat(AnimHash.Speed, currentAnimSpeed);
+        }
+
         public override void PlayAnimation(int animHash)
         {
             Animator.SetBool(animHash, true);

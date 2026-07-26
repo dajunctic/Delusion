@@ -37,6 +37,7 @@ namespace Dajunctic
                 return;
             }
             
+            context.UpdateLocomotionAnimation(0f);
             context.HandleDeceleration(context.StoppingDeceleration);
 
             var horizontalVelocity = context.Velocity;

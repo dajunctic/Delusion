@@ -22,6 +22,7 @@ namespace Dajunctic
 
         public Vector3 GetMoveDirection();
         public void HandleMove(float speed, Vector3 direction, bool allowRotation = true);
+        public void UpdateLocomotionAnimation(float targetSpeedNormalized);
         public bool CanDash();
         public void StartDash();
 

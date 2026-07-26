@@ -38,6 +38,7 @@ namespace Dajunctic
                 return;
             }
 
+            context.UpdateLocomotionAnimation(0f);
             context.HandleMove(GetSpeed(), context.GetMoveDirection());
         }   
 

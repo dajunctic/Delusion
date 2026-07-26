@@ -19,5 +19,7 @@ namespace Dajunctic
 
         public static int Airborne = Animator.StringToHash("Airborne");
         public static int Jump => Animator.StringToHash("IsJumping");
+
+        public static int Speed => Animator.StringToHash("Speed");
     }
 }
