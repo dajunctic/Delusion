@@ -9,6 +9,9 @@ namespace Dajunctic
             context.AddForceVerticalVelocity(context.JumpForce);
 
             context.PlayAnimation(AnimHash.Jump);
+
+            context.ResetCoyoteTime();
+            context.ResetJumpBuffer();
         }
 
         public override void Exit()

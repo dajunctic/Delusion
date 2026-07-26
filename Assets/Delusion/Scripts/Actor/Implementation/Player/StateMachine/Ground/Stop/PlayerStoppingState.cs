@@ -39,7 +39,7 @@ namespace Dajunctic
             
             context.HandleDeceleration(context.StoppingDeceleration);
 
-            var horizontalVelocity = context.CharacterController.velocity;
+            var horizontalVelocity = context.Velocity;
             horizontalVelocity.y = 0f;
 
             if (horizontalVelocity.sqrMagnitude <= 0.01f)

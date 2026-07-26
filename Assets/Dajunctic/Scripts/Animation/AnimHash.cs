@@ -14,5 +14,7 @@ namespace Dajunctic
         public static int LightStop => Animator.StringToHash("IsLightStopping");
         public static int HardStop => Animator.StringToHash("IsHardStopping");
         public static int Landing => Animator.StringToHash("IsLanding");
+        public static int LightLanding => Animator.StringToHash("IsLightLanding");
+        public static int HardLanding => Animator.StringToHash("IsHardLanding");
     }
 }

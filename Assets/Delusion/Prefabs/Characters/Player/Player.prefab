@@ -42,7 +42,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4246478270767356555}
   - component: {fileID: 467024243899614413}
-  - component: {fileID: 7721521748418183559}
+  - component: {fileID: 8733727875212703792}
+  - component: {fileID: 5396510252625119230}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -88,8 +89,38 @@ MonoBehaviour:
   sprintInput: {fileID: -8750674506638915993, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   dashInput: {fileID: -3294256688921747177, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   cam: {fileID: 0}
---- !u!143 &7721521748418183559
-CharacterController:
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!54 &8733727875212703792
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7349049346291688290}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!136 &5396510252625119230
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,15 +134,13 @@ CharacterController:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 1.8
+  serializedVersion: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_Height: 1.8
+  m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1001 &5337217868509229775
 PrefabInstance:
@@ -171,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: fce08d0aa5a1e6f4a872fbf670002448, type: 2}
     - target: {fileID: 5866666021909216657, guid: 1c24d75710e4b9c4780794a089007963, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

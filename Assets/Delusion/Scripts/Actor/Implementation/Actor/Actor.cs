@@ -2,11 +2,13 @@ using UnityEngine;
 
 namespace Dajunctic
 {
-    public abstract class Actor: BaseMono, IActor
+    public abstract class Actor : BaseMono, IActor
     {
         public Animator Animator => gameObject.GetAndCacheComponent(ref animator);
-        public CharacterController CharacterController => gameObject.GetAndCacheComponent(ref characterController);
+        public Rigidbody Rigidbody => gameObject.GetAndCacheComponent(ref rigidbodyComp);
+        public CapsuleCollider CapsuleCollider => gameObject.GetAndCacheComponent(ref capsuleColliderComp);
         public Transform CachedTransform => gameObject.GetAndCacheComponent(ref mTransform);
+        public Vector3 Velocity => Rigidbody.linearVelocity;
 
         public virtual float WalkSpeed => 2.0f;
         public virtual float RunSpeed => 5.335f;
@@ -23,7 +25,8 @@ namespace Dajunctic
         public virtual Vector3 Forward => CachedTransform.forward;
 
         protected Animator animator;
-        protected CharacterController characterController; 
+        protected Rigidbody rigidbodyComp;
+        protected CapsuleCollider capsuleColliderComp;
         private Transform mTransform;
 
         private float rotationVelocity;
@@ -48,12 +51,12 @@ namespace Dajunctic
 
         public virtual void PlayAnimation(int animHash)
         {
-            
+
         }
 
         public virtual void StopAnimation(int animHash)
         {
-           
+
         }
     }
 }

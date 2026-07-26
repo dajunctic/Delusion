@@ -21,5 +21,23 @@ namespace Dajunctic
         public bool CanDash();
         public void StartDash();
 
+        public float AirControlRatio {get; }
+        public float LightLandingDuration {get; }
+        public float HardLandingDuration {get; }
+        public float HardLandingThreshold {get; }
+
+        public void UpdateCoyoteTime();
+        public void ResetCoyoteTime();
+        public bool IsCoyoteTimeValid();
+
+        public void UpdateJumpBuffer();
+        public bool IsJumpBufferValid();
+        public void ResetJumpBuffer();
+
+
+        public void StartTrackingFall();
+        public float GetFallDistance();
+        public bool IsHardLanding();
+
     }
 }

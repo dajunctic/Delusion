@@ -2,6 +2,13 @@ namespace Dajunctic
 {
     public class PlayerFallState: PlayerAirborneState
     {
+        public override void Enter()
+        {
+            base.Enter();
+
+            context.StartTrackingFall();
+        }
+
         public override void Tick()
         {
             base.Tick();
@@ -11,22 +18,7 @@ namespace Dajunctic
 
             if (context.IsGround())
             {
-                if (moveInput.sqrMagnitude >= 0.01f)
-                {
-                    if (sprintInput)
-                    {
-                        stateMachine.ChangeState<PlayerRunState>();
-                    } 
-                    else
-                    {
-                        stateMachine.ChangeState<PlayerWalkState>();
-                    }       
-                }
-                else
-                {
-                    stateMachine.ChangeState<PlayerIdleState>();
-                }
-
+                stateMachine.ChangeState<PlayerLandingState>();
                 return;
             }
 

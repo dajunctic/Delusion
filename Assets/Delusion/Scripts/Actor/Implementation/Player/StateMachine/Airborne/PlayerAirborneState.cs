@@ -7,7 +7,9 @@ namespace Dajunctic
              var moveInput = context.GetMoveInput();
             var sprintInput = context.GetSprintInput();
 
-            return moveInput.sqrMagnitude >= 0.01f ? (sprintInput ? context.RunSpeed : context.WalkSpeed): 0f;
+            var baseSpeed =  moveInput.sqrMagnitude >= 0.01f ? (sprintInput ? context.RunSpeed : context.WalkSpeed): 0f;
+
+            return baseSpeed * context.AirControlRatio;
         }
     }
 }
