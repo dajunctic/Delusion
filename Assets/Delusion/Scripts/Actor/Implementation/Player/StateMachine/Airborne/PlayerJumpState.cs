@@ -6,7 +6,8 @@ namespace Dajunctic
         {
             base.Enter();
 
-            context.AddForceVerticalVelocity(context.JumpForce);
+            float adjustedJumpForce = context.JumpForce * context.GetSlopeJumpMultiplier();
+            context.AddForceVerticalVelocity(adjustedJumpForce);
 
             context.PlayAnimation(AnimHash.Jump);
 

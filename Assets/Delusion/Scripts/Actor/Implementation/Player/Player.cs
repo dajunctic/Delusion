@@ -28,9 +28,12 @@ namespace Dajunctic
         private float CoyoteTime => 0.15f;
         private float JumpBufferTime => 0.12f;
 
-        private float MaxSlopeAngle = 45f; 
-        private float SlopeSnapForce = 10f;
-        private AnimationCurve SlopeJumpCurve = AnimationCurve.Linear(0f, 1f, 45f, 0.65f);
+        [SerializeField] private float maxSlopeAngle = 45f;
+        [SerializeField] private float slopeSnapForce = 10f;
+        [SerializeField] private AnimationCurve slopeJumpCurve = AnimationCurve.Linear(0f, 1f, 45f, 0.65f);
+
+        private RaycastHit groundHit;
+        private float currentSlopeAngle;
 
         protected BaseStateMachine<IPlayer> stateMachine;
 
@@ -56,6 +59,7 @@ namespace Dajunctic
                     new PlayerJumpState(),
                     new PlayerFallState(),
                     new PlayerLandingState(),
+                    new PlayerRollingState(),
                     new PlayerDashState(),
                     new PlayerLightStoppingState(),
                     new PlayerHardStoppingState()
@@ -121,7 +125,30 @@ namespace Dajunctic
         {
             Vector3 rayOrigin = transform.position + Vector3.up * 0.2f;
             int mask = groundLayer & ~(1 << gameObject.layer);
-            return Physics.Raycast(rayOrigin, Vector3.down, 0.35f, mask, QueryTriggerInteraction.Ignore);
+            if (Physics.Raycast(rayOrigin, Vector3.down, out groundHit, 0.45f, mask, QueryTriggerInteraction.Ignore))
+            {
+                currentSlopeAngle = Vector3.Angle(Vector3.up, groundHit.normal);
+                return true;
+            }
+
+            currentSlopeAngle = 0f;
+            return false;
+        }
+
+        public bool IsExceedingMaxSlope()
+        {
+            return IsGround() && currentSlopeAngle > maxSlopeAngle;
+        }
+
+        public Vector3 GetGroundNormal() => groundHit.normal;
+        public float GetSlopeAngle() => currentSlopeAngle;
+
+        public float GetSlopeJumpMultiplier()
+        {
+            if (slopeJumpCurve == null || slopeJumpCurve.length == 0)
+                return 1f;
+            float mult = slopeJumpCurve.Evaluate(currentSlopeAngle);
+            return mult <= 0f ? 1f : mult;
         }
 
         public override void PlayAnimation(int animHash)
@@ -164,9 +191,32 @@ namespace Dajunctic
 
         public void HandleMove(float speed, Vector3 moveDirection)
         {
-            var targetVelocity = moveDirection * speed;
-            targetVelocity.y = IsGround() && verticalVelocity <= 0 ? 0f : GetVerticalVelocity();
-            Rigidbody.linearVelocity = targetVelocity;
+            if (IsGround() && verticalVelocity <= 0)
+            {
+                if (IsExceedingMaxSlope())
+                {
+                    Vector3 slideDirection = new Vector3(groundHit.normal.x, -groundHit.normal.y, groundHit.normal.z);
+                    Rigidbody.linearVelocity = slideDirection * speed;
+                    return;
+                }
+
+                Vector3 slopeMoveDir = Vector3.ProjectOnPlane(moveDirection, groundHit.normal).normalized;
+                Vector3 targetVelocity = slopeMoveDir * speed;
+
+                if (verticalVelocity <= 0)
+                {
+                    targetVelocity.y -= slopeSnapForce * Time.deltaTime;
+                }
+
+                Rigidbody.linearVelocity = targetVelocity;
+            }
+            else
+            {
+                var targetVelocity = moveDirection * speed;
+                targetVelocity.y = GetVerticalVelocity();
+                Rigidbody.linearVelocity = targetVelocity;
+            }
+
             RotateToDirection(moveDirection);
         }
 
@@ -223,7 +273,7 @@ namespace Dajunctic
 
         public void StartTrackingFall()
         {
-           fallStartY = Position.y;
+            fallStartY = Position.y;
         }
 
         public float GetFallDistance()

@@ -2,6 +2,19 @@ namespace Dajunctic
 {
     public class PlayerAirborneState: BaseState<IPlayer>
     {
+
+        public override void Enter()
+        {
+            base.Enter();
+            context.PlayAnimation(AnimHash.Airborne);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            context.StopAnimation(AnimHash.Airborne);
+        }
+        
         protected float GetSpeed()
         {
              var moveInput = context.GetMoveInput();

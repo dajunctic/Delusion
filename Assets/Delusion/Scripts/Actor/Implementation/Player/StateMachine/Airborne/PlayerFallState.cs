@@ -18,7 +18,14 @@ namespace Dajunctic
 
             if (context.IsGround())
             {
-                stateMachine.ChangeState<PlayerLandingState>();
+                if (context.IsHardLanding() && moveInput.sqrMagnitude >= 0.01f)
+                {
+                    stateMachine.ChangeState<PlayerRollingState>();
+                }
+                else
+                {
+                    stateMachine.ChangeState<PlayerLandingState>();
+                }
                 return;
             }
 

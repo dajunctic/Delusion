@@ -7,6 +7,10 @@ namespace Dajunctic
         public Camera Camera {get; }
 
         public bool IsGround();
+        public bool IsExceedingMaxSlope();
+        public float GetSlopeJumpMultiplier();
+        public Vector3 GetGroundNormal();
+        public float GetSlopeAngle();
 
         public Vector2 GetMoveInput();
         public bool GetSprintInput();
