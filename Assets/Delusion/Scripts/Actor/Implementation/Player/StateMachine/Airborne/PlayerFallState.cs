@@ -8,7 +8,6 @@ namespace Dajunctic
 
             var sprintInput = context.GetSprintInput();
             var moveInput = context.GetMoveInput();
-            context.GetVerticalVelocity();
 
             if (context.IsGround())
             {

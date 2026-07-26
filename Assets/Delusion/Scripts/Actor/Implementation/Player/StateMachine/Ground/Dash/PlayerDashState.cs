@@ -16,7 +16,7 @@ namespace Dajunctic
 
             var moveInput = context.GetMoveInput();
 
-            dashDirection =  moveInput.sqrMagnitude >= 0.01 ? context.GetMoveDirection() : context.CachedTransform.forward;
+            dashDirection =  moveInput.sqrMagnitude >= 0.01f ? context.GetMoveDirection() : context.CachedTransform.forward;
 
             context.PlayAnimation(AnimHash.Dash);
         }

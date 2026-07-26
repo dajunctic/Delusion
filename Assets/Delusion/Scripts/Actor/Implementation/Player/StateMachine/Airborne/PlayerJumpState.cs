@@ -8,7 +8,14 @@ namespace Dajunctic
 
             context.AddForceVerticalVelocity(context.JumpForce);
 
-            context.Animator.SetBool(AnimHash.Jump, true);
+            context.PlayAnimation(AnimHash.Jump);
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+
+            context.StopAnimation(AnimHash.Jump);
         }
 
         public override void Tick()

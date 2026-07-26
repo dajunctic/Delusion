@@ -31,6 +31,7 @@ namespace Dajunctic
             if (context.CanDash())
             {
                 stateMachine.ChangeState<PlayerDashState>();
+                return;
             }
 
             if (!context.IsGround())

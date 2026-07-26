@@ -13,7 +13,7 @@ namespace Dajunctic
         public override void Exit()
         {
             base.Exit();
-            context.PlayAnimation(AnimHash.Run);
+            context.StopAnimation(AnimHash.Run);
         }
 
         public override void Tick()

@@ -61,7 +61,20 @@ namespace Dajunctic
         public override void Tick()
         {
             base.Tick();
+            ApplyGravity();
             stateMachine.Tick();
+        }
+
+        private void ApplyGravity()
+        {
+            if (IsGround() && verticalVelocity <= 0)
+            {
+                verticalVelocity = -2f;
+            }
+            else
+            {
+                verticalVelocity += Gravity * Time.deltaTime;
+            }
         }
 
         public Vector2 GetMoveInput()
@@ -101,18 +114,8 @@ namespace Dajunctic
             Animator.SetBool(animHash, false);
         }
 
-        
         public float GetVerticalVelocity()
         {
-            if (IsGround() && verticalVelocity <= 0)
-            {
-                verticalVelocity = -2f;
-            }
-            else
-            {
-                verticalVelocity += Gravity * Time.deltaTime;
-            }
-
             return verticalVelocity;
         }
 

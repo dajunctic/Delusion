@@ -23,7 +23,7 @@ namespace Dajunctic
             var moveInput = context.GetMoveInput();
             var sprintInput = context.GetSprintInput();
 
-            if (moveInput.sqrMagnitude >= 0.01)
+            if (moveInput.sqrMagnitude >= 0.01f)
             {
                 if (sprintInput)
                 {
@@ -42,7 +42,7 @@ namespace Dajunctic
             var horizontalVelocity = context.CharacterController.velocity;
             horizontalVelocity.y = 0f;
 
-            if (horizontalVelocity.sqrMagnitude <= 0.01)
+            if (horizontalVelocity.sqrMagnitude <= 0.01f)
             {
                 stateMachine.ChangeState<PlayerIdleState>();
             }
