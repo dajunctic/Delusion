@@ -4,7 +4,6 @@ namespace Dajunctic
 {
     public interface IPlayer: IActor
     {
-        public int SpeedHash { get; }
         public Camera Camera {get; }
 
         public bool IsGround();
@@ -15,9 +14,12 @@ namespace Dajunctic
         
         public float GetVerticalVelocity();
         public void AddForceVerticalVelocity(float force);
+        public void HandleDeceleration(float deceleration);
 
-        
-        public void HandleMove(float speed);
+        public Vector3 GetMoveDirection();
+        public void HandleMove(float speed, Vector3 direction);
+        public bool CanDash();
+        public void StartDash();
 
     }
 }

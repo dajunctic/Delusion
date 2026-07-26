@@ -7,8 +7,14 @@ namespace Dajunctic
         public override void Enter()
         {
             base.Enter();
-            context.Animator.SetFloat(context.SpeedHash, 0f);
+           
+            context.PlayAnimation(AnimHash.Idle);
+        }
 
+        public override void Exit()
+        {
+            base.Exit();
+            context.StopAnimation(AnimHash.Idle);
         }
 
         public override void Tick()
@@ -28,9 +34,11 @@ namespace Dajunctic
                 {
                     stateMachine.ChangeState<PlayerWalkState>();
                 }
+
+                return;
             }
 
-            context.HandleMove(0);
+            context.HandleMove(GetSpeed(), context.GetMoveDirection());
         }   
 
     }

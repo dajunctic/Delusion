@@ -11,8 +11,12 @@ namespace Dajunctic
         public virtual float WalkSpeed => 2.0f;
         public virtual float RunSpeed => 5.335f;
         public virtual float RotateSpeed => 5f;
+        public virtual float DashSpeed => 12f;
+        public virtual float DashDuration => 0.35f;
+        public virtual float DashCooldown => 2f;
+        public virtual float StoppingDeceleration => 15f;
         public virtual float Gravity => -9.81f;
-        public virtual float JumpForce => 1.5f;
+        public virtual float JumpForce => 6.5f;
 
 
         public virtual Vector3 Position => CachedTransform.position;
@@ -22,15 +26,34 @@ namespace Dajunctic
         protected CharacterController characterController; 
         private Transform mTransform;
 
+        private float rotationVelocity;
+        public float RotationSmoothTime = 0.12f;
+
 
         public override void Initialize()
         {
             base.Initialize();
         }
 
-        public void Rotate(Vector3 direction, float dt)
+        public void RotateToDirection(Vector3 direction)
         {
-            CachedTransform.forward = Vector3.Lerp(CachedTransform.forward, direction, dt);
+            if (direction.sqrMagnitude < 0.01f) return;
+
+            var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+
+            var rotation = Mathf.SmoothDampAngle(CachedTransform.eulerAngles.y, targetAngle, ref rotationVelocity, RotationSmoothTime);
+
+            CachedTransform.rotation = Quaternion.Euler(0f, rotation, 0f);
+        }
+
+        public virtual void PlayAnimation(int animHash)
+        {
+            
+        }
+
+        public virtual void StopAnimation(int animHash)
+        {
+           
         }
     }
 }

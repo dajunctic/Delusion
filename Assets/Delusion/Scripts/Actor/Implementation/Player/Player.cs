@@ -11,15 +11,15 @@ namespace Dajunctic
         [SerializeField] InputActionReference jumpInput;
         [SerializeField] InputActionReference lookInput;
         [SerializeField] InputActionReference sprintInput;
+        [SerializeField] InputActionReference dashInput;
 
         [SerializeField] Camera cam;
         public Camera Camera => cam;
 
         protected BaseStateMachine<IPlayer> stateMachine;
 
-        public int SpeedHash => Animator.StringToHash("Speed");
-
         private float verticalVelocity;
+        private float lastDashTime;
 
         public override void Initialize()
         {
@@ -34,7 +34,11 @@ namespace Dajunctic
                     new PlayerWalkState(),
                     new PlayerRunState(),
                     new PlayerJumpState(),
-                    new PlayerFallState()
+                    new PlayerFallState(),
+                    new PlayerLandingState(),
+                    new PlayerDashState(),
+                    new PlayerLightStoppingState(),
+                    new PlayerHardStoppingState()
                 }
             );
  
@@ -75,10 +79,26 @@ namespace Dajunctic
             return jumpInput.action.IsPressed();
         }
 
+        public bool GetDashInput()
+        {
+            return dashInput.action.IsPressed();
+        }
+
         public bool IsGround()
         {
-            Vector3 sphereOrigin = Position + Vector3.up * 0.2f;
-            return Physics.SphereCast(sphereOrigin, 0.3f, Vector3.down, out var hit,  0.25f);
+            return CharacterController.isGrounded;
+            // Vector3 sphereOrigin = Position + Vector3.up * 0.2f;
+            // return Physics.SphereCast(sphereOrigin, 0.3f, Vector3.down, out var hit,  0.25f);
+        }
+
+        public override void PlayAnimation(int animHash)
+        {
+            Animator.SetBool(animHash, true);
+        }
+
+        public override void StopAnimation(int animHash)
+        {
+            Animator.SetBool(animHash, false);
         }
 
         
@@ -98,7 +118,7 @@ namespace Dajunctic
 
         public void AddForceVerticalVelocity(float force)
         {
-            verticalVelocity += force;
+            verticalVelocity = force;
         }
 
         public Vector3 GetMoveDirection()
@@ -116,14 +136,34 @@ namespace Dajunctic
         }
 
 
-        public void HandleMove(float speed)
+        public void HandleMove(float speed, Vector3 moveDirection)
         {
-            var moveDirection = GetMoveDirection();
             var moveSpeed = speed * Time.deltaTime;
-            var verticalVelocity = GetVerticalVelocity();
+            var verticalVelocity = GetVerticalVelocity() * Time.deltaTime;
 
             CharacterController.Move(moveSpeed * moveDirection + new Vector3(0f, verticalVelocity, 0f));
-            Rotate(moveDirection, 0.3f);
+            RotateToDirection(moveDirection);
+        }
+
+        public void HandleDeceleration(float deceleration)
+        {
+            var currentVelocity = CharacterController.velocity;
+            currentVelocity.y = 0;
+
+            var decelerationVelocity = Vector3.MoveTowards(currentVelocity, Vector3.zero, deceleration);
+            decelerationVelocity.y = GetVerticalVelocity();
+
+            CharacterController.Move(decelerationVelocity * Time.deltaTime);
+        }
+
+        public bool CanDash()
+        {
+            return GetDashInput() && IsGround() && Time.time - lastDashTime >= DashCooldown;
+        }
+
+        public void StartDash()
+        {
+            lastDashTime = Time.time;
         }
     }
 }

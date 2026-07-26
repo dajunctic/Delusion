@@ -2,16 +2,12 @@ namespace Dajunctic
 {
     public class PlayerAirborneState: BaseState<IPlayer>
     {
-        public override void Enter()
+        protected float GetSpeed()
         {
-            base.Enter();
-        }
+             var moveInput = context.GetMoveInput();
+            var sprintInput = context.GetSprintInput();
 
-        public override void Tick()
-        {
-            base.Tick();
-
-
+            return moveInput.sqrMagnitude >= 0.01f ? (sprintInput ? context.RunSpeed : context.WalkSpeed): 0f;
         }
     }
 }

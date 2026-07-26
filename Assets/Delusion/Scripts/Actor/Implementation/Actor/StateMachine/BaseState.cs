@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Dajunctic
 {
     public abstract class BaseState<T> : IState<T>
@@ -13,7 +15,7 @@ namespace Dajunctic
 
         public virtual void Enter()
         {
-            
+            Debug.Log(GetType());
         }
 
         public virtual void Exit()

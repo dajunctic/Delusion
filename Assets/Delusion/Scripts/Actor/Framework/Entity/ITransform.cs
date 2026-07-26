@@ -8,6 +8,7 @@ namespace Dajunctic
         public Vector3 Position {get; }
         public Vector3 Forward {get; }
 
-        public void Rotate(Vector3 direction, float dt);
+        public void RotateToDirection(Vector3 direction);
+
     }
 }

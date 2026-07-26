@@ -80,11 +80,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dajunctic.Player
   tickMode: 11
   initialized: 1
+  RotationSmoothTime: 0.12
   playerInput: {fileID: -944628639613478452, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   moveInput: {fileID: -3552364970006637457, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   jumpInput: {fileID: -1916377846673030204, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   lookInput: {fileID: -3787169064211337688, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   sprintInput: {fileID: -8750674506638915993, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
+  dashInput: {fileID: -3294256688921747177, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   cam: {fileID: 0}
 --- !u!143 &7721521748418183559
 CharacterController:
@@ -169,7 +171,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: fce08d0aa5a1e6f4a872fbf670002448, type: 2}
     - target: {fileID: 5866666021909216657, guid: 1c24d75710e4b9c4780794a089007963, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

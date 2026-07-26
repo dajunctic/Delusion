@@ -27,10 +27,11 @@ namespace Dajunctic
                 {
                     stateMachine.ChangeState<PlayerIdleState>();
                 }
-                     
+
+                return;
             }
 
-            context.HandleMove(0);
+            context.HandleMove(GetSpeed(), context.GetMoveDirection());
         }
     }
 }

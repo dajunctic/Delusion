@@ -7,6 +7,8 @@ namespace Dajunctic
             base.Enter();
 
             context.AddForceVerticalVelocity(context.JumpForce);
+
+            context.Animator.SetBool(AnimHash.Jump, true);
         }
 
         public override void Tick()
@@ -18,9 +20,10 @@ namespace Dajunctic
             if (verticalVelocity <= 0)
             {
                 stateMachine.ChangeState<PlayerFallState>();
+                return;
             }
 
-            context.HandleMove(0);
+            context.HandleMove(GetSpeed(), context.GetMoveDirection());
         }
     }
 }
