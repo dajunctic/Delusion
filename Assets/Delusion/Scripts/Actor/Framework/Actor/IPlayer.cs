@@ -26,6 +26,12 @@ namespace Dajunctic
         public bool CanDash();
         public void StartDash();
 
+        public float DashSpeed {get; }
+        public float DashDuration {get; }
+        public float DashCooldown {get; }
+        public float StoppingDeceleration {get; }
+        public float JumpForce {get; }
+
         public float AirControlRatio {get; }
         public float LightLandingDuration {get; }
         public float HardLandingDuration {get; }

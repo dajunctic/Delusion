@@ -6,24 +6,20 @@ namespace Dajunctic
     [Serializable]
     public class ActorData
     {
-        [SerializeField] private float walkSpeed = 2.0f;
-        [SerializeField] private float runSpeed = 5.335f;
-        [SerializeField] private float rotateSpeed = 5f;
-        [SerializeField] private float jumpForce = 6.5f;
-        [SerializeField] private float stoppingDeceleration = 20f;
-        [SerializeField] private float dashSpeed = 12f;
-        [SerializeField] private float dashDuration = 0.35f;
-        [SerializeField] private float dashCooldown = 2.0f;
+        [SerializeField] ActorMovement movement;
 
-        public float WalkSpeed => walkSpeed;
-        public float RunSpeed => runSpeed;
-        public float RotateSpeed => rotateSpeed;
+        public float WalkSpeed => movement.walkSpeed;
+        public float RunSpeed => movement.runSpeed;
+        public float RotateSpeed => movement.rotateSpeed;
+        public float Radius => movement.radius;
+    }
 
-        public float JumpForce => jumpForce;
-        public float StoppingDeceleration => stoppingDeceleration;
-
-        public float DashSpeed => dashSpeed;
-        public float DashDuration => dashDuration;
-        public float DashCooldown => dashCooldown;
+    [Serializable]
+    public class ActorMovement
+    {
+        public float walkSpeed = 2.0f;
+        public float runSpeed = 5.335f;
+        public float rotateSpeed = 5f;
+        public float radius = 0.3f;
     }
 }

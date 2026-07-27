@@ -15,12 +15,6 @@ namespace Dajunctic
         public virtual float WalkSpeed => actorData.WalkSpeed;
         public virtual float RunSpeed => actorData.RunSpeed;
         public virtual float RotateSpeed => actorData.RotateSpeed;
-        public virtual float DashSpeed => actorData.DashSpeed;
-        public virtual float DashDuration => actorData.DashDuration;
-        public virtual float DashCooldown => actorData.DashCooldown;
-        public virtual float StoppingDeceleration => actorData.StoppingDeceleration;
-        public virtual float Gravity => MathUtils.Gravity;
-        public virtual float JumpForce => actorData.JumpForce;
 
         public virtual Vector3 Position => CachedTransform.position;
         public virtual Vector3 Forward => CachedTransform.forward;

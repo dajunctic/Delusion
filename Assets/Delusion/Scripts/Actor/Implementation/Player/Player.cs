@@ -17,7 +17,11 @@ namespace Dajunctic
         [SerializeField] LayerMask groundLayer = ~0;
         [SerializeField] private PlayerData playerData;
 
-        public Camera Camera => cam;
+        public float JumpForce => playerData.JumpForce;
+        public float StoppingDeceleration => playerData.StoppingDeceleration;
+        public float DashSpeed => playerData.DashSpeed;
+        public float DashDuration => playerData.DashDuration;
+        public float DashCooldown => playerData.DashCooldown;
 
         public float AirControlRatio => playerData.AirControlRatio;
         public float LightLandingDuration => playerData.LightLandingDuration;
@@ -30,6 +34,8 @@ namespace Dajunctic
         private float maxSlopeAngle => playerData.MaxSlopeAngle;
         private float slopeSnapForce => playerData.SlopeSnapForce;
         private AnimationCurve slopeJumpCurve => playerData.SlopeJumpCurve;
+
+        public Camera Camera => cam;
 
         private RaycastHit groundHit;
         private float currentSlopeAngle;
@@ -97,7 +103,7 @@ namespace Dajunctic
             }
             else
             {
-                verticalVelocity += Gravity * Time.deltaTime;
+                verticalVelocity += MathUtils.Gravity * Time.deltaTime;
             }
         }
 
@@ -203,13 +209,13 @@ namespace Dajunctic
             {
                 if (IsExceedingMaxSlope())
                 {
-                    Vector3 slideDirection = new Vector3(groundHit.normal.x, -groundHit.normal.y, groundHit.normal.z);
+                    var slideDirection = new Vector3(groundHit.normal.x, -groundHit.normal.y, groundHit.normal.z);
                     Rigidbody.linearVelocity = slideDirection * speed;
                     return;
                 }
 
-                Vector3 slopeMoveDir = Vector3.ProjectOnPlane(moveDirection, groundHit.normal).normalized;
-                Vector3 targetVelocity = slopeMoveDir * speed;
+                var slopeMoveDir = Vector3.ProjectOnPlane(moveDirection, groundHit.normal).normalized;
+                var targetVelocity = slopeMoveDir * speed;
 
                 if (verticalVelocity <= 0)
                 {
