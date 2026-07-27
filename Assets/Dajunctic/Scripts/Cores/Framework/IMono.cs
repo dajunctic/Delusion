@@ -1,6 +1,6 @@
 namespace Dajunctic
 {
-    public interface IMono: ICanTick
+    public interface IMono: ILifeCycle, ICanTick, ICanListenEvent
     {
         
     }

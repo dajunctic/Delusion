@@ -15,22 +15,21 @@ namespace Dajunctic
 
         [SerializeField] Camera cam;
         [SerializeField] LayerMask groundLayer = ~0;
+        [SerializeField] private PlayerData playerData;
+
         public Camera Camera => cam;
 
-        public float AirControlRatio => 0.6f;
+        public float AirControlRatio => playerData.AirControlRatio;
+        public float LightLandingDuration => playerData.LightLandingDuration;
+        public float HardLandingDuration => playerData.HardLandingDuration;
+        public float HardLandingThreshold => playerData.HardLandingThreshold;
 
-        public float LightLandingDuration => 0.15f;
+        private float CoyoteTime => playerData.CoyoteTime;
+        private float JumpBufferTime => playerData.JumpBufferTime;
 
-        public float HardLandingDuration => 0.5f;
-
-        public float HardLandingThreshold => 5f;
-
-        private float CoyoteTime => 0.15f;
-        private float JumpBufferTime => 0.12f;
-
-        [SerializeField] private float maxSlopeAngle = 45f;
-        [SerializeField] private float slopeSnapForce = 10f;
-        [SerializeField] private AnimationCurve slopeJumpCurve = AnimationCurve.Linear(0f, 1f, 45f, 0.65f);
+        private float maxSlopeAngle => playerData.MaxSlopeAngle;
+        private float slopeSnapForce => playerData.SlopeSnapForce;
+        private AnimationCurve slopeJumpCurve => playerData.SlopeJumpCurve;
 
         private RaycastHit groundHit;
         private float currentSlopeAngle;
@@ -46,6 +45,7 @@ namespace Dajunctic
 
         public override void Initialize()
         {
+            SetupData(playerData.ActorData);
             base.Initialize();
 
             stateMachine = new PlayerStateMachine<IPlayer>();

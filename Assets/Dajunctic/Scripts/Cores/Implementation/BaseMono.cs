@@ -7,6 +7,9 @@ namespace Dajunctic
         [SerializeField] TickMode tickMode;
         [SerializeField] bool initialized;
 
+        public bool Initialized => initialized;
+
+
         void Start()
         {
             if (initialized) Initialize();
@@ -24,6 +27,7 @@ namespace Dajunctic
             DoDisable();
             UnSubTick();
             StopListenEvents();
+            CleanUp();
         }
 
         void SubTick()
@@ -51,6 +55,6 @@ namespace Dajunctic
         public virtual void Tick() {}
         public virtual void LateTick() {}
         public virtual void FixedTick() {}
-        
+        public virtual void CleanUp(){}
     }
 }

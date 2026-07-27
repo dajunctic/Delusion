@@ -10,16 +10,17 @@ namespace Dajunctic
         public Transform CachedTransform => gameObject.GetAndCacheComponent(ref mTransform);
         public Vector3 Velocity => Rigidbody.linearVelocity;
 
-        public virtual float WalkSpeed => 2.0f;
-        public virtual float RunSpeed => 5.335f;
-        public virtual float RotateSpeed => 5f;
-        public virtual float DashSpeed => 12f;
-        public virtual float DashDuration => 0.35f;
-        public virtual float DashCooldown => 2f;
-        public virtual float StoppingDeceleration => 20f;
-        public virtual float Gravity => -9.81f;
-        public virtual float JumpForce => 6.5f;
+        protected ActorData actorData;
 
+        public virtual float WalkSpeed => actorData.WalkSpeed;
+        public virtual float RunSpeed => actorData.RunSpeed;
+        public virtual float RotateSpeed => actorData.RotateSpeed;
+        public virtual float DashSpeed => actorData.DashSpeed;
+        public virtual float DashDuration => actorData.DashDuration;
+        public virtual float DashCooldown => actorData.DashCooldown;
+        public virtual float StoppingDeceleration => actorData.StoppingDeceleration;
+        public virtual float Gravity => MathUtils.Gravity;
+        public virtual float JumpForce => actorData.JumpForce;
 
         public virtual Vector3 Position => CachedTransform.position;
         public virtual Vector3 Forward => CachedTransform.forward;
@@ -36,6 +37,11 @@ namespace Dajunctic
         public override void Initialize()
         {
             base.Initialize();
+        }
+
+        public virtual void SetupData(ActorData data)
+        {
+            actorData = data;
         }
 
         public void RotateToDirection(Vector3 direction)
