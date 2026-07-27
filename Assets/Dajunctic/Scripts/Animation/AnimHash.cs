@@ -21,5 +21,12 @@ namespace Dajunctic
         public static int Jump => Animator.StringToHash("IsJumping");
 
         public static int Speed => Animator.StringToHash("Speed");
+
+
+
+        // Interactable Object
+        public static int Open => Animator.StringToHash("Open");
+        public static int Close => Animator.StringToHash("Close");
+        public static int Jam => Animator.StringToHash("Jam");
     }
 }

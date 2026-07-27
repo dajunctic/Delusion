@@ -14,14 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dajunctic.PlayerData
   id: 
   actorData:
-    walkSpeed: 2
-    runSpeed: 5.335
-    rotateSpeed: 5
-    jumpForce: 6.5
-    stoppingDeceleration: 20
-    dashSpeed: 12
-    dashDuration: 0.35
-    dashCooldown: 2
+    movement:
+      walkSpeed: 3
+      runSpeed: 6.335
+      rotateSpeed: 5
+      radius: 0.3
+  stoppingDeceleration: 20
+  dashSpeed: 12
+  dashDuration: 0.35
+  dashCooldown: 2
+  jumpForce: 6.5
   coyoteTime: 0.15
   jumpBufferTime: 0.12
   airControlRatio: 0.6

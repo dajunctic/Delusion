@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +13,8 @@ namespace Dajunctic
         [SerializeField] InputActionReference lookInput;
         [SerializeField] InputActionReference sprintInput;
         [SerializeField] InputActionReference dashInput;
+
+        [SerializeField] InputActionReference interactInput;
 
         [SerializeField] Camera cam;
         [SerializeField] LayerMask groundLayer = ~0;
@@ -48,6 +51,9 @@ namespace Dajunctic
         private float jumpBufferTimer;
         private float fallStartY;
 
+        private IInteractable interactable;
+        private bool canInteract;
+
 
         public override void Initialize()
         {
@@ -80,12 +86,14 @@ namespace Dajunctic
         public override void ListenEvents()
         {
             base.ListenEvents();
-
+            interactInput.action.started += HandleInteract;
         }
 
         public override void StopListenEvents()
         {
             base.StopListenEvents();
+            interactInput.action.started -= HandleInteract;
+
         }
 
         public override void Tick()
@@ -302,5 +310,23 @@ namespace Dajunctic
         {
             return GetFallDistance() >= HardLandingThreshold;
         }
+
+        public override void SetCanInteractor(bool canInteract, IInteractable interactable)
+        {
+            base.SetCanInteractor(canInteract, interactable);
+
+            this.canInteract = canInteract;
+            this.interactable = interactable;
+        }
+
+        public void HandleInteract(InputAction.CallbackContext ctx) 
+        {
+            if (canInteract)
+            {
+                Debug.LogError("ahaha");
+                interactable.OnInteract(this);
+            }
+        }
+
     }
 }

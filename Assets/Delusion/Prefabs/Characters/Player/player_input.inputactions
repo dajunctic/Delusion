@@ -43,6 +43,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "84632ec1-e498-4408-ba53-691ea1a0f7bb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Sprint",
                     "type": "PassThrough",
                     "id": "980e881e-182c-404c-8cbf-3d09fdb48fef",
@@ -226,6 +235,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd1d99bd-6028-4c22-a34c-bc12fe1c981b",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92b6991a-7762-4a9f-b0d4-148752e50c0d",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

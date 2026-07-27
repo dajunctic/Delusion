@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Dajunctic
 {
-    public interface IActor: ITransform, IMovable, IAnimator, ISkillOwner, IDamageTaker, IDamageDealer
+    public interface IActor: ITransform, IMovable, IAnimator, ISkillOwner, IDamageTaker, IDamageDealer, IInteractor
     {
         public Rigidbody Rigidbody { get; }
         public CapsuleCollider CapsuleCollider { get; }

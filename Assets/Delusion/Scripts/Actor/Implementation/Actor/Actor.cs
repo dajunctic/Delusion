@@ -58,5 +58,10 @@ namespace Dajunctic
         {
 
         }
+
+        public virtual void SetCanInteractor(bool canInteract, IInteractable interactable)
+        {
+            
+        }
     }
 }
