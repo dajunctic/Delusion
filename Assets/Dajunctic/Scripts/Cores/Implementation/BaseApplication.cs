@@ -74,7 +74,7 @@ namespace Dajunctic
 
         #endregion
 
-        #region  EventDispatcher
+        #region EventDispatcher
 
         private static readonly Dictionary<Type, Delegate> _subscribers = new Dictionary<Type, Delegate>();
 
@@ -179,6 +179,23 @@ namespace Dajunctic
 
             Debug.LogError($"[BaseApplication] Can not find system has type: {type.Name}");
             return default;
+        }
+        #endregion
+
+        #region Pool
+        public GameObject Spawn(GameObject prefab, Vector3 position = default, Quaternion rotation = default, Transform parent = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T Spawn<T>(T prefab, Vector3 position = default, Quaternion rotation = default, Transform parent = null) where T : Component
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Despawn(GameObject obj, float delay = 0)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
