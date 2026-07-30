@@ -28,6 +28,8 @@ namespace Dajunctic
             
         }
 
+        public virtual bool CanInteract() => false;
+
         public virtual string GetInteractDecs() => string.Empty;
 
         public virtual void OnInteract(IInteractor interactor) {}

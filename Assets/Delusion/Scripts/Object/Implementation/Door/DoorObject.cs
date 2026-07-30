@@ -21,6 +21,11 @@ namespace Dajunctic
             return isOpen ? "Press E to close" : "Press E to open";
         }
 
+        public override bool CanInteract()
+        {
+            return CanToggle();
+        }
+
         public override void PlayAnimation(int animHash)
         {
             Animator.Play(animHash, 0, 0f);
@@ -46,10 +51,10 @@ namespace Dajunctic
         public override void Toggle()
         {
             base.Toggle();
-            Debug.LogError("ahoho");
 
             lastTime = Time.time;
             isOpen = !isOpen;
+
 
             PlayAnimation(isOpen ? AnimHash.Open: AnimHash.Close);
         }

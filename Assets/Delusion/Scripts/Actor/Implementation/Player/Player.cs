@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 namespace Dajunctic
@@ -19,6 +20,9 @@ namespace Dajunctic
         [SerializeField] Camera cam;
         [SerializeField] LayerMask groundLayer = ~0;
         [SerializeField] private PlayerData playerData;
+        [SerializeField] private Transform grapContainer;
+
+        private PlayerRigAnim RigAnim => gameObject.GetAndCacheComponent(ref rigAnim);
 
         public float JumpForce => playerData.JumpForce;
         public float StoppingDeceleration => playerData.StoppingDeceleration;
@@ -39,6 +43,8 @@ namespace Dajunctic
         private AnimationCurve slopeJumpCurve => playerData.SlopeJumpCurve;
 
         public Camera Camera => cam;
+
+        private PlayerRigAnim rigAnim;
 
         private RaycastHit groundHit;
         private float currentSlopeAngle;
@@ -81,6 +87,7 @@ namespace Dajunctic
             stateMachine.ChangeState<PlayerIdleState>();
 
             playerInput.Enable();
+            RigAnim.SetAnim(RigAnimation.None);
         }
 
         public override void ListenEvents()
@@ -323,8 +330,23 @@ namespace Dajunctic
         {
             if (canInteract)
             {
-                Debug.LogError("ahaha");
-                interactable.OnInteract(this);
+                if (interactable is IGrabInteractable grabInteractable)
+                {
+                    if (grabInteractable.State == GrabState.None)
+                    {
+                        RigAnim.SetAnim(RigAnimation.Grab);
+                        grabInteractable.Pick(grapContainer);
+                    }
+                    else
+                    {
+                        RigAnim.SetAnim(RigAnimation.None);
+                        grabInteractable.Drop();
+                    }    
+                }
+                else 
+                {
+                    interactable.OnInteract(this);
+                }
             }
         }
 
