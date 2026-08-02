@@ -88,6 +88,11 @@ namespace Dajunctic
 
             playerInput.Enable();
             RigAnim.SetAnim(RigAnimation.None);
+
+            if (Rigidbody != null)
+            {
+                Rigidbody.freezeRotation = true;
+            }
         }
 
         public override void ListenEvents()
@@ -144,9 +149,10 @@ namespace Dajunctic
 
         public bool IsGround()
         {
-            Vector3 rayOrigin = transform.position + Vector3.up * 0.2f;
+            float radius = CapsuleCollider != null ? CapsuleCollider.radius * 0.9f : 0.2f;
+            Vector3 rayOrigin = transform.position + Vector3.up * (radius + 0.05f);
             int mask = groundLayer & ~(1 << gameObject.layer);
-            if (Physics.Raycast(rayOrigin, Vector3.down, out groundHit, 0.45f, mask, QueryTriggerInteraction.Ignore))
+            if (Physics.SphereCast(rayOrigin, radius, Vector3.down, out groundHit, 0.2f, mask, QueryTriggerInteraction.Ignore))
             {
                 currentSlopeAngle = Vector3.Angle(Vector3.up, groundHit.normal);
                 return true;
@@ -206,11 +212,15 @@ namespace Dajunctic
         public Vector3 GetMoveDirection()
         {
             var moveInput = GetMoveInput();
-            var camForward = Camera.transform.forward.normalized;
-            var camRight = Camera.transform.right.normalized;
+            if (moveInput.sqrMagnitude < 0.01f) return Vector3.zero;
+
+            var camForward = Camera.transform.forward;
+            var camRight = Camera.transform.right;
 
             camForward.y = 0f;
             camRight.y = 0f;
+            camForward.Normalize();
+            camRight.Normalize();
 
             var moveDirection = (camForward * moveInput.y) + (camRight * moveInput.x);
 
@@ -234,7 +244,7 @@ namespace Dajunctic
 
                 if (verticalVelocity <= 0)
                 {
-                    targetVelocity.y -= slopeSnapForce * Time.deltaTime;
+                    targetVelocity.y = Mathf.Min(targetVelocity.y, -1f);
                 }
 
                 Rigidbody.linearVelocity = targetVelocity;
