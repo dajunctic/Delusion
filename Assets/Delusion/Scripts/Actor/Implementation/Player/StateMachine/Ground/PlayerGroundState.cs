@@ -22,7 +22,7 @@ namespace Dajunctic
         {
             base.Tick();
 
-            if (context.GetJumpInput())
+            if (context.GetJumpInput() && !context.IsHoldItem)
             {
                 stateMachine.ChangeState<PlayerJumpState>();
                 return;

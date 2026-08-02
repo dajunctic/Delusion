@@ -6,6 +6,10 @@ namespace Dajunctic
     {
         public Camera Camera {get; }
 
+        public bool IsHoldItem {get; }
+        public IGrabInteractable HeldItem {get; }
+        public IInteractable GetPrimaryInteractable();
+
         public bool IsGround();
         public bool IsExceedingMaxSlope();
         public float GetSlopeJumpMultiplier();

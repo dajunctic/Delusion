@@ -33,7 +33,11 @@ namespace Dajunctic
         {
             base.Tick();
 
-            if (interactable is null) return;
+            if (interactable is null)
+            {
+                toggleUI.SetActive(false);
+                return;
+            }
             toggleUI.SetActive(canShow && interactable.CanInteract());
             decs.text = interactable.GetInteractDecs();
         }

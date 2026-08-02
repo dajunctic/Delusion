@@ -42,6 +42,11 @@ namespace Dajunctic
         private float slopeSnapForce => playerData.SlopeSnapForce;
         private AnimationCurve slopeJumpCurve => playerData.SlopeJumpCurve;
 
+        public bool IsHoldItem => HeldItem != null;
+
+        public IGrabInteractable HeldItem => heldItem;
+
+
         public Camera Camera => cam;
 
         private PlayerRigAnim rigAnim;
@@ -57,8 +62,8 @@ namespace Dajunctic
         private float jumpBufferTimer;
         private float fallStartY;
 
-        private IInteractable interactable;
-        private bool canInteract;
+        private IGrabInteractable heldItem;
+        private List<IInteractable> activeInteractables = new ();
 
 
         public override void Initialize()
@@ -332,33 +337,94 @@ namespace Dajunctic
         {
             base.SetCanInteractor(canInteract, interactable);
 
-            this.canInteract = canInteract;
-            this.interactable = interactable;
+            if (canInteract)
+            {
+                if (!activeInteractables.Contains(interactable))
+                {
+                    activeInteractables.Add(interactable);
+                }
+            }
+            else
+            {
+                activeInteractables.Remove(interactable);
+            }
+
+            UpdateInteractableUI();
         }
 
         public void HandleInteract(InputAction.CallbackContext ctx) 
         {
-            if (canInteract)
+            var interactable = GetPrimaryInteractable();
+            if (interactable == null)
             {
-                if (interactable is IGrabInteractable grabInteractable)
-                {
-                    if (grabInteractable.State == GrabState.None)
-                    {
-                        RigAnim.SetAnim(RigAnimation.Grab);
-                        grabInteractable.Pick(grapContainer);
-                    }
-                    else
-                    {
-                        RigAnim.SetAnim(RigAnimation.None);
-                        grabInteractable.Drop();
-                    }    
-                }
-                else 
-                {
-                    interactable.OnInteract(this);
-                }
+                UpdateInteractableUI();
+                return;
             }
+          
+            if (interactable is IGrabInteractable grabInteractable)
+            {
+                if (heldItem == grabInteractable)
+                {
+                    RigAnim.SetAnim(RigAnimation.None);
+                    grabInteractable.Drop();
+                    heldItem = null;
+                }
+                else if (grabInteractable.State == GrabState.None)
+                {
+                    if (heldItem != null)
+                    {
+                        heldItem.Drop();
+                        heldItem = null;
+                    }
+
+                    RigAnim.SetAnim(RigAnimation.Grab);
+                    grabInteractable.Pick(grapContainer);
+                    heldItem = grabInteractable;
+                }    
+            }
+            else 
+            {
+                interactable.OnInteract(this);
+            }
+
+            UpdateInteractableUI();
         }
 
+        public IInteractable GetPrimaryInteractable()
+        {
+            activeInteractables.RemoveAll(x => x == null);
+
+            foreach (var interactable in activeInteractables)
+            {
+                if (interactable is not IGrabInteractable) return interactable;
+            }
+
+            foreach (var interactable in activeInteractables)
+            {
+                if (interactable is IGrabInteractable grab && grab.State == GrabState.None && !IsHoldItem)
+                {
+                    return interactable;
+                }
+            }
+
+            if (IsHoldItem) return HeldItem;
+
+            return null;
+        }
+
+        void UpdateInteractableUI()
+        {
+            var interactable = GetPrimaryInteractable();
+
+            if (interactable != null && interactable.CanInteract())
+            {
+                this.Raise(new ShowInteractUI(true, interactable));
+            }
+            else
+            {
+                this.Raise(new ShowInteractUI(false, null));
+            }
+
+        }
     }
 }
