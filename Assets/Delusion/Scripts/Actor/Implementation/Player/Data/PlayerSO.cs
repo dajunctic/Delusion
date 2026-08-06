@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Dajunctic
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "Dajunctic/Data/PlayerData")]
-    public class PlayerData : BaseSO
+    public class PlayerData : BaseConfig
     {
         [SerializeField] private ActorData actorData;
 

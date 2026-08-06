@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -8,24 +9,23 @@ namespace Dajunctic
     public class MainApplication: BaseApplication
     {
         [SerializeField] AssetReference homeScene;
-
-        public override void Initialize()
+        
+        async void Start()
         {
-            base.Initialize();
-            StartCoroutine(IWaitLoading());
+            _ = LoadingAsync();
         }
 
-        IEnumerator IWaitLoading()
+        async UniTask LoadingAsync()
         {
-            yield return new WaitUntil(() => Initialized);
+            await InitializeAsync();
+            await UniTask.WaitUntil(() => Initialized);
             AddressableUtils.LoadScene(homeScene);
         }
 
-        protected override void InitializeSystems()
+        protected override async UniTask InitializeSystems()
         {
-            base.InitializeSystems();
-
-            
+            await base.InitializeSystems();
+            RegisterSystem<IComputerSystem>(new ComputerSystem());
         }
     }
 }

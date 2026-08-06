@@ -367,6 +367,7 @@ MonoBehaviour:
   sprintInput: {fileID: -8750674506638915993, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   dashInput: {fileID: -3294256688921747177, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   interactInput: {fileID: -8191239926128282474, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
+  escapeIpput: {fileID: 1592291134768951226, guid: 7d07f972b1818234ca2bed0ef69e066b, type: 3}
   cam: {fileID: 0}
   groundLayer:
     serializedVersion: 2

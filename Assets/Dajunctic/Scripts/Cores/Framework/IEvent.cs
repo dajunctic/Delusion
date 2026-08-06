@@ -17,18 +17,18 @@ namespace Dajunctic
     public static class EventDispatcherExtensions
     {
     
-        public static void Raise<T>(this MonoBehaviour mono, T eventData) where T : struct, IEvent
+        public static void Raise<T>(this ICanSendEvent mono, T eventData) where T : struct, IEvent
         {
             IApplication.Instance.Raise(eventData);
         }
 
-        public static Action<T> RegisterListener<T>(this MonoBehaviour mono, Action<T> callback) where T : struct, IEvent
+        public static Action<T> RegisterListener<T>(this ICanListenEvent mono, Action<T> callback) where T : struct, IEvent
         {
             IApplication.Instance.RegisterListener(callback);
             return callback;
         }
 
-        public static Action<T> RemoveListener<T>(this MonoBehaviour mono, Action<T> callback) where T : struct, IEvent
+        public static Action<T> RemoveListener<T>(this ICanListenEvent mono, Action<T> callback) where T : struct, IEvent
         {
             IApplication.Instance.RemoveListener(callback);
             return callback;

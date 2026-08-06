@@ -16,6 +16,7 @@ namespace Dajunctic
         [SerializeField] InputActionReference dashInput;
 
         [SerializeField] InputActionReference interactInput;
+        [SerializeField] InputActionReference escapeIpput;
 
         [SerializeField] Camera cam;
         [SerializeField] LayerMask groundLayer = ~0;
@@ -63,6 +64,7 @@ namespace Dajunctic
         private float fallStartY;
 
         private IGrabInteractable heldItem;
+        private IEscapeInteratable escItem;
         private List<IInteractable> activeInteractables = new ();
 
 
@@ -104,12 +106,14 @@ namespace Dajunctic
         {
             base.ListenEvents();
             interactInput.action.started += HandleInteract;
+            escapeIpput.action.started += HandleEscape;
         }
 
         public override void StopListenEvents()
         {
             base.StopListenEvents();
             interactInput.action.started -= HandleInteract;
+            escapeIpput.action.started -= HandleEscape;
 
         }
 
@@ -407,6 +411,7 @@ namespace Dajunctic
                 }
             }
 
+
             if (IsHoldItem) return HeldItem;
 
             return null;
@@ -425,6 +430,14 @@ namespace Dajunctic
                 this.Raise(new ShowInteractUI(false, null));
             }
 
+        }
+
+        void HandleEscape(InputAction.CallbackContext ctx)
+        {
+            if (escItem != null)
+            {
+                escItem.Escape();
+            }
         }
     }
 }

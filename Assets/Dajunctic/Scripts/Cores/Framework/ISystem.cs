@@ -1,6 +1,6 @@
 namespace Dajunctic
 {
-    public interface ISystem
+    public interface ISystem: ILifeCycle
     {
         
     }

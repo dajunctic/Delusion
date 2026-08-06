@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Dajunctic
 {
-    public interface IApplication: ILifeCycle, IEventDispatcher, ITicker, ISystemLocator, IPool
+    public interface IApplication: ILifeCycle, IEventDispatcher, ITicker, ISystemLocator, IPool, ICommandProcessor, IConfigProcessor
     {
         static IApplication Instance;
 

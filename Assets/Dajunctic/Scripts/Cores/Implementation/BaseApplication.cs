@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Dajunctic
 {
-    public abstract class BaseApplication: MonoBehaviour, IApplication
+    public abstract partial class BaseApplication: MonoBehaviour, IApplication
     {   
         private bool initialized;
         public bool Initialized => initialized;
@@ -24,9 +26,9 @@ namespace Dajunctic
             initialized = false;
         }
 
-        void Start()
+        async void Start()
         {
-            Initialize();
+            _ = InitializeAsync();
         }
 
         void Update()
@@ -60,9 +62,15 @@ namespace Dajunctic
             CleanUp();
         }
 
-        public virtual void Initialize()
+        public void Initialize()
         {
-            InitializeSystems();
+
+        }
+
+        public virtual async UniTask InitializeAsync()
+        {
+            await InitializeSystems();
+            await InitializeConfig();
 
             initialized = true;
         }
@@ -134,52 +142,6 @@ namespace Dajunctic
         public event Action OnLateTick;
         public event Action OnFixedTick;
 
-        #endregion
-
-        #region System
-
-        private readonly Dictionary<Type, object> _systems = new Dictionary<Type, object>();
-
-        protected virtual void InitializeSystems()
-        {
-            
-        }
-
-        public void RegisterSystem<T>(T system)
-        {
-            Type type = typeof(T);
-
-            if (_systems.ContainsKey(type))
-            {
-                _systems[type] = system;
-            }
-            else
-            {
-                _systems.Add(type, system);
-            }
-        }
-
-        public void UnregisterSystem<T>()
-        {
-            Type type = typeof(T);
-            if (_systems.ContainsKey(type))
-            {
-                _systems.Remove(type);
-            }
-        }
-
-        public T GetSystem<T>()
-        {
-            Type type = typeof(T);
-
-            if (_systems.TryGetValue(type, out object system))
-            {
-                return (T)system;
-            }
-
-            Debug.LogError($"[BaseApplication] Can not find system has type: {type.Name}");
-            return default;
-        }
         #endregion
 
         #region Pool
