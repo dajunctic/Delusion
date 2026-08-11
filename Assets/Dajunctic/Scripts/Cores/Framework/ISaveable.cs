@@ -2,7 +2,8 @@ namespace Dajunctic
 {
     public interface ISavable
     {
-        void Load();
-        void Save(bool write);
+        string SaveId {get; }
+        void PopulateSaveData(ISave save);
+        void RestoreSaveData(ISave save);
     }
 }

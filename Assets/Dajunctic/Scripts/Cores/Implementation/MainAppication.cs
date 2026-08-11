@@ -25,7 +25,14 @@ namespace Dajunctic
         protected override async UniTask InitializeSystems()
         {
             await base.InitializeSystems();
-            RegisterSystem<IComputerSystem>(new ComputerSystem());
+            var saveSystem = new SaveSystem();
+            var computerSytem = new ComputerSystem();
+
+            RegisterSystem<ISaveSystem>(saveSystem);
+            RegisterSystem<IComputerSystem>(computerSytem);
+
+
+            // await saveSystem.Initialize();
         }
     }
 }

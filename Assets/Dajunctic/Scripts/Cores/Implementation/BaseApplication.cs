@@ -69,8 +69,8 @@ namespace Dajunctic
 
         public virtual async UniTask InitializeAsync()
         {
-            await InitializeSystems();
             await InitializeConfig();
+            await InitializeSystems();
 
             initialized = true;
         }
