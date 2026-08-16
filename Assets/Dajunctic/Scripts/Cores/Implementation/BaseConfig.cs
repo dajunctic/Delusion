@@ -7,6 +7,8 @@ namespace Dajunctic
     {
         [SerializeField, ReadOnly] private string id;
 
+        public string Id => id;
+
         public bool Initialized => initialized;
         private bool initialized;
 
@@ -26,6 +28,11 @@ namespace Dajunctic
 #if UNITY_EDITOR
         [Button]
         public void ResetId()
+        {
+            id = name;
+        }
+
+        void OnValidate()
         {
             id = name;
         }
